@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 //Routes for views
 Route::get('/', function () {
-    $products = Product::all();
+    $products = Product::orderBy('created_at', 'desc')->get();
     return view('home', ['products' => $products]);
 });
 

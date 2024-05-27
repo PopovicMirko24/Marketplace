@@ -43,10 +43,11 @@
     @foreach($products as $product)
             <div class="col" style="margin-bottom: 20px">
                 <div class="card" style="width: 300px; margin-left: auto; margin-right: auto;">
-                    <img style="width: 300px; height: 300px" class="card-img-top" src="images/1\1716847367_6655030799c8b.png" alt="Card image cap">
+                    <img style="width: 300px; height: 300px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">proizvod</h5>
-                        <p class="card-text">opis</p>
+                        <h5 class="card-title">{{$product['title']}}</h5>
+                        <p class="card-text">{{$product['description']}}</p>
+                        <span>{{$product['created_at']}}</span><br><br>
                         <a href="#" class="btn btn-primary">See more</a>
                     </div>
                 </div>
