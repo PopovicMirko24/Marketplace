@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,6 @@ Route::get('/signIn', function () {
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register',  [UserController::class, 'register']);
 Route::get('/logout',  [UserController::class, 'logout']);
+
+//Routes for product
+Route::post('/create-product',  [ProductController::class, 'createProduct']);

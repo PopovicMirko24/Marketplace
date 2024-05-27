@@ -39,6 +39,22 @@
 </nav>
 
 @auth
+    <div class="row" style="width: 800px; margin-left: auto; margin-right: auto; margin-top: 100px;">
+        <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto; border-right: 1px solid rgba(128,128,128,0.51);">
+
+        </div>
+        <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto;">
+            <h2 style="text-align: center; margin-bottom: 20px">Put On Sale</h2>
+            <form method="post" action="/create-product" enctype="multipart/form-data">
+                @csrf
+                <input class="form-control" type="text" name="title" placeholder="title"><br>
+                <input class="form-control" type="text" name="description" placeholder="description"><br>
+                <input class="form-control" id="formFile" type="file" name="image"><br>
+                <input class="form-control" type="text" name="price" placeholder="price in $"><br>
+                <input class="btn btn-primary" type="submit" value="Put On Sale" style="width: 100%; text-align: center;"><br>
+            </form>
+        </div>
+    </div>
 @else
     <h1 style="text-align: center; margin-top: 40vh; color: rgba(67,65,65,0.52);">Login first</h1>
 @endauth
