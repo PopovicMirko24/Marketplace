@@ -41,18 +41,64 @@
 @auth
     <div class="row" style="width: 800px; margin-left: auto; margin-right: auto; margin-top: 100px;">
         <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto; border-right: 1px solid rgba(128,128,128,0.51);">
-
+            <h2 style="text-align: center; margin-bottom: 20px">Your data</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Name: {{auth()->user()->name}}</li>
+                <li class="list-group-item">Lastname: {{auth()->user()->lastname}}</li>
+                <li class="list-group-item">Email: {{auth()->user()->email}}</li>
+                <li class="list-group-item">Joined at: {{auth()->user()->created_at}}</li>
+                <li class="list-group-item">Number of products: {{$products->count()}}</li>
+                <li class="list-group-item">
+                    <form action="/delete-user?uset_id={{auth()->id()}}" method="get">
+                        <input class="btn btn-danger" type="submit" value="Delete Account" style="width: 100%; text-align: center;"><br>
+                    </form>
+                </li>
+            </ul>
         </div>
         <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto;">
             <h2 style="text-align: center; margin-bottom: 20px">Put On Sale</h2>
             <form method="post" action="/create-product" enctype="multipart/form-data">
                 @csrf
-                <input class="form-control" type="text" name="title" placeholder="title"><br>
-                <input class="form-control" type="text" name="description" placeholder="description"><br>
-                <input class="form-control" id="formFile" type="file" name="image"><br>
-                <input class="form-control" type="text" name="price" placeholder="price in $"><br>
-                <input class="btn btn-primary" type="submit" value="Put On Sale" style="width: 100%; text-align: center;"><br>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <input class="form-control" type="text" name="title" placeholder="title">
+                    </li>
+                    <li class="list-group-item">
+                        <input class="form-control" type="text" name="description" placeholder="description">
+                    </li>
+                    <li class="list-group-item">
+                        <input class="form-control" type="text" name="description" placeholder="description">
+                    </li>
+                    <li class="list-group-item">
+                        <input class="form-control" id="formFile" type="file" name="image">
+                    </li>
+                    <li class="list-group-item">
+                        <input class="form-control" type="text" name="price" placeholder="price in $">
+                    </li>
+                    <li class="list-group-item">
+                        <input class="btn btn-primary" type="submit" value="Put On Sale" style="width: 100%; text-align: center;">
+                    </li>
+                </ul>
+
             </form>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 50px">
+        <h2 style="margin-left: 50px; margin-bottom: 30px;">Your Products</h2>
+        <div class="row">
+            @foreach($products as $product)
+                <div class="col" style="margin-bottom: 20px">
+                    <div class="card" style="width: 300px; margin-left: auto; margin-right: auto;">
+                        <img style="width: 300px; height: 300px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{$product['title']}}</h5>
+                            <p class="card-text">{{$product['description']}}</p>
+                            <span>{{$product['created_at']}}</span><br><br>
+                            <a href="#" class="btn btn-primary">See more</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 @else

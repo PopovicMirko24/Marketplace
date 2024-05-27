@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,8 @@ Route::get('/', function () {
 });
 
 Route::get('/profile', function () {
-    return view('user');
+    $products = Product::where('user_id', Auth::id())->orderby('created_at', 'desc')->get();
+    return view('user', ['products' => $products]);
 });
 
 Route::get('/signIn', function () {
