@@ -39,22 +39,20 @@
 </nav>
 <div class="container" style="margin-top: 50px">
     <h2 style="margin-left: 50px; margin-bottom: 30px;">Products</h2>
+    <div class="row">
     @foreach($products as $product)
-        <div class="row g-2">
-            <div class="col-6" style="margin-bottom: 20px">
-                <div class="p-3">
-                    <div class="card" style="width: 400px; margin-left: auto; margin-right: auto;">
-                        <img style="width: 400px; height: 400px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$product['title']}}</h5>
-                            <p class="card-text">{{$product['description']}}</p>
-                            <a href="#" class="btn btn-primary">See more</a>
-                        </div>
+            <div class="col" style="margin-bottom: 20px">
+                <div class="card" style="width: 300px; margin-left: auto; margin-right: auto;">
+                    <img style="width: 300px; height: 300px" class="card-img-top" src="images/1\1716847367_6655030799c8b.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">proizvod</h5>
+                        <p class="card-text">opis</p>
+                        <a href="#" class="btn btn-primary">See more</a>
                     </div>
                 </div>
             </div>
-        </div>
     @endforeach
+    </div>
 </div>
 </body>
 </html>

@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 //Routes for views
 Route::get('/', function () {
-    return view('home', ['products' => Product::all()]);
+    $products = Product::all();
+    return view('home', ['products' => $products]);
 });
 
 Route::get('/profile', function () {
