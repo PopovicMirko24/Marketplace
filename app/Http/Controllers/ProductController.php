@@ -22,21 +22,15 @@ class ProductController extends Controller
         $incomingFields['description'] = strip_tags($incomingFields['description']);
         $incomingFields['user_id'] = auth()->id();
 
-        $userDirectory = 'public/images/user' .auth()->id();
-
-
-        if (!Storage::exists($userDirectory)) {
-            Storage::makeDirectory($userDirectory);
-        }
+        $userDirectory = 'images/'.auth()->id();
 
         $image = $request->file('image');
         $newImageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-        $image->move($userDirectory, $newImageName);
+        $path = $image->move($userDirectory, $newImageName);
 
-        $imgPath = $userDirectory . $newImageName;
 
-        $incomingFields['image'] = $imgPath;
+        $incomingFields['image'] = $path;
 
         Product::create($incomingFields);
         return redirect()->back();

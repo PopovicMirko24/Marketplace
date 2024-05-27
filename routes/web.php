@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 //Routes for views
 Route::get('/', function () {
-    return view('home');
+    return view('home', ['products' => Product::all()]);
 });
 
 Route::get('/profile', function () {
@@ -35,3 +36,4 @@ Route::get('/logout',  [UserController::class, 'logout']);
 
 //Routes for product
 Route::post('/create-product',  [ProductController::class, 'createProduct']);
+
