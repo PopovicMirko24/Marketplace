@@ -52,9 +52,7 @@
                 <li class="list-group-item">Joined at: {{auth()->user()->created_at}}</li>
                 <li class="list-group-item">Number of products: {{$products->count()}}</li>
                 <li class="list-group-item">
-                    <form action="/delete-user?uset_id={{auth()->id()}}" method="get">
-                        <input class="btn btn-danger" type="submit" value="Delete Account" style="width: 100%; text-align: center;">
-                    </form>
+                    <a style="width: 100%" class="btn btn-danger" href="/delete-user/{{auth()->user()->id}}">Delete Account</a>
                 </li>
             </ul>
         </div>

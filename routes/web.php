@@ -35,10 +35,12 @@ Route::get('/signIn', function () {
     return view('login');
 });
 
-//Routes for login and register
+
+//Routes for user
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register',  [UserController::class, 'register']);
 Route::get('/logout',  [UserController::class, 'logout']);
+Route::get('/delete-user/{user}', [UserController::class, 'deleteUser']);
 
 //Routes for product
 Route::post('/create-product',  [ProductController::class, 'createProduct']);

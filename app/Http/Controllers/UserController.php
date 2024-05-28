@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class UserController extends Controller
         if(auth()->attempt(['email' => $incomingFields['loginEmail'], 'password' => $incomingFields['loginPassword']])){
             $request->session()->regenerate();
         }else{
-            return redirect('login');
+            return redirect('/signIn');
         }
 
         return redirect('/');
@@ -40,6 +41,14 @@ class UserController extends Controller
 
     public function logout(){
         auth()->logout();
+        return redirect('/');
+    }
+
+    public function deleteUser(User $user){
+        if(auth()->user()->id === $user->id){
+            $user->showUsersProducts()->delete();
+            $user->delete();
+        }
         return redirect('/');
     }
 }
