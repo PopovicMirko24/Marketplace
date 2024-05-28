@@ -73,4 +73,12 @@ class ProductController extends Controller
         $product->update($incomingFields);
         return redirect('/profile');
     }
+
+    public function deleteProduct(Product $product){
+        if(auth()->user()->id !== $product->user_id){
+            return redirect('/');
+        }
+        $product->delete();
+        return redirect('/profile');
+    }
 }

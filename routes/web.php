@@ -44,4 +44,4 @@ Route::get('/logout',  [UserController::class, 'logout']);
 Route::post('/create-product',  [ProductController::class, 'createProduct']);
 Route::get('/edit-product/{product}',  [ProductController::class, 'showEditScreen']);
 Route::post('/update-product/{product}',  [ProductController::class, 'updateProduct']);
-
+Route::get('/delete-product/{product}',  [ProductController::class, 'deleteProduct']);
