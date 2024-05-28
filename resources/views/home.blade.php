@@ -24,7 +24,11 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
+                @if(auth()->check())
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}">Profile</a>
+                @else
+                    <a class="nav-link" href="#">Profile</a>
+                @endif
             </li>
             <li class="nav-item">
                 @auth
@@ -46,11 +50,11 @@
     @foreach($products as $product)
             <div class="col" style="margin-bottom: 20px">
                 <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
-                    <img style="width: 200px; height: 200px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
+                    <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{$product['title']}}</h5>
                         <p class="card-text">{{$product['description']}}</p>
-                        <span>By: <a href="#">{{$product->user->name.' '.$product->user->lastname}}</a></span>
+                        <span>By: <a href="/user/{{$product->user->id}}">{{$product->user->name.' '.$product->user->lastname}}</a></span>
                         <span>{{$product['created_at']}}</span><br><br>
                         <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
                     </div>

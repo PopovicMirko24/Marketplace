@@ -52,10 +52,21 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function loadUserPage(User $user){
-        if(auth()->user()->id === $user->id)
-            return redirect('/profile');
+    public function showUserProfile(User $user){
+        if(auth()->user()){
+            $products = $user->showUsersProducts()->latest()->get();
+            return view('user', ['products' => $products, 'user' => auth()->user()]);
+        }
+        return view('user');
+    }
 
-        return view('user', ['user' => $user]);
+    public function loadUserPage(User $user){
+        if(auth()->check()){
+            if(auth()->user()->id === $user->id)
+                return redirect('/profile/'.$user->id);
+        }
+
+        $products = $user->showUsersProducts()->latest()->get();
+        return view('user', ['user' => $user, 'products' => $products]);
     }
 }

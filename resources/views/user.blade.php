@@ -24,7 +24,11 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/profile">Profile</a>
+                @if(auth()->check())
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}">Profile</a>
+                @else
+                    <a class="nav-link" href="#">Profile</a>
+                @endif
             </li>
             <li class="nav-item">
                 @auth
@@ -44,57 +48,67 @@
 @auth
     <div class="row" style="width: 800px; margin-left: auto; margin-right: auto; margin-top: 100px;">
         <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto; border-right: 1px solid rgba(128,128,128,0.51);">
-            <h2 style="text-align: center; margin-bottom: 20px">Your data</h2>
             <ul class="list-group">
-                <li class="list-group-item">Name: {{auth()->user()->name}}</li>
-                <li class="list-group-item">Lastname: {{auth()->user()->lastname}}</li>
-                <li class="list-group-item">Email: {{auth()->user()->email}}</li>
-                <li class="list-group-item">Joined at: {{auth()->user()->created_at}}</li>
+                <li class="list-group-item">Name: {{$user->name}}</li>
+                <li class="list-group-item">Lastname: {{$user->lastname}}</li>
+                <li class="list-group-item">Email: {{$user->email}}</li>
+                <li class="list-group-item">Joined at: {{$user->created_at}}</li>
                 <li class="list-group-item">Number of products: {{$products->count()}}</li>
-                <li class="list-group-item">
-                    <a style="width: 100%" class="btn btn-danger" href="/delete-user/{{auth()->user()->id}}">Delete Account</a>
-                </li>
+                @if(auth()->user()->id === $user->id)
+                    <li class="list-group-item">
+                        <a style="width: 100%" class="btn btn-danger" href="/delete-user/{{auth()->user()->id}}">Delete Account</a>
+                    </li>
+                @endif
             </ul>
         </div>
-        <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto;">
-            <h2 style="text-align: center; margin-bottom: 20px">Put On Sale</h2>
-            <form method="post" action="/create-product" enctype="multipart/form-data">
-                @csrf
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <input class="form-control" type="text" name="title" placeholder="title">
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-control" type="text" name="description" placeholder="description">
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-control" id="formFile" type="file" name="image">
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-control" type="text" name="price" placeholder="price in $">
-                    </li>
-                    <li class="list-group-item">
-                        <input class="btn btn-primary" type="submit" value="Put On Sale" style="width: 100%; text-align: center;">
-                    </li>
-                </ul>
+        @if(auth()->user()->id === $user->id)
+            <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto;">
+                <h2 style="text-align: center; margin-bottom: 20px">Put On Sale</h2>
+                <form method="post" action="/create-product" enctype="multipart/form-data">
+                    @csrf
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <input class="form-control" type="text" name="title" placeholder="title">
+                        </li>
+                        <li class="list-group-item">
+                            <input class="form-control" type="text" name="description" placeholder="description">
+                        </li>
+                        <li class="list-group-item">
+                            <input class="form-control" id="formFile" type="file" name="image">
+                        </li>
+                        <li class="list-group-item">
+                            <input class="form-control" type="text" name="price" placeholder="price in $">
+                        </li>
+                        <li class="list-group-item">
+                            <input class="btn btn-primary" type="submit" value="Put On Sale" style="width: 100%; text-align: center;">
+                        </li>
+                    </ul>
 
-            </form>
-        </div>
+                </form>
+            </div>
+        @endif
     </div>
     <div class="container" style="margin-top: 50px">
-        <h2 style="margin-left: 50px; margin-bottom: 30px;">Your Products</h2>
+        @if(auth()->user()->id === $user->id)
+            <h2 style="margin-left: 50px; margin-bottom: 30px;">Your Products</h2>
+        @else
+            <h2 style="margin-left: 50px; margin-bottom: 30px;">{{$user->name}}'s Products</h2>
+        @endif
         <div class="row">
             @foreach($products as $product)
                 <div class="col" style="margin-bottom: 20px">
                     <div class="card" style="width: 300px; margin-left: auto; margin-right: auto;">
-                        <img style="width: 300px; height: 300px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
+                        <img style="width: 300px; height: 300px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{$product['title']}}</h5>
                             <p class="card-text">{{$product['description']}}</p>
-                            <span>By: <a href="#">{{$product->user->name.' '.$product->user->lastname}}</a></span><br>
                             <span>{{$product['created_at']}}</span><br><br>
-                            <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
-                            <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
+                            @if(auth()->user()->id === $user->id)
+                                <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
+                                <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
+                            @else
+                                <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
+                            @endif
                         </div>
                     </div>
                 </div>

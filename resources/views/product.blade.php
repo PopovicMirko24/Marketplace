@@ -24,7 +24,11 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
+                @if(auth()->check())
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}">Profile</a>
+                @else
+                    <a class="nav-link" href="#">Profile</a>
+                @endif
             </li>
             <li class="nav-item">
                 @auth

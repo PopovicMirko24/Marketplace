@@ -23,13 +23,7 @@ Route::get('/', function () {
     return view('home', ['products' => $products]);
 });
 
-Route::get('/profile', function () {
-    if(auth()->user()){
-        $products = auth()->user()->showUsersProducts()->latest()->get();
-        return view('user', ['products' => $products]);
-    }
-    return view('user');
-});
+Route::get('/profile/{user}', [UserController::class, 'showUserProfile']);
 
 Route::get('/signIn', function () {
     return view('login');
@@ -37,7 +31,7 @@ Route::get('/signIn', function () {
 
 Route::get('/product/{product}', [ProductController::class, 'loadProductPage']);
 
-Route::get('u=/user/{user}', [UserController::class, 'loadUserPage']);
+Route::get('/user/{user}', [UserController::class, 'loadUserPage']);
 
 //Routes for user
 Route::post('/login', [UserController::class, 'login']);

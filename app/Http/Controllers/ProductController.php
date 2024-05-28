@@ -79,7 +79,7 @@ class ProductController extends Controller
             return redirect('/');
         }
         $product->delete();
-        return redirect('/profile');
+        return redirect('/profile/'.$product->user_id);
     }
 
     public function loadProductPage(Product $product){
