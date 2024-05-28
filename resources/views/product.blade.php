@@ -4,7 +4,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
+    <title>{{$product->title}}</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
@@ -33,6 +33,17 @@
                     <a class="nav-link" href="/signIn">Login</a>
                 @endauth
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Category
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Category 1</a>
+                    <a class="dropdown-item" href="#">Category 2</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">All categories</a>
+                </div>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search">
@@ -40,23 +51,20 @@
         </form>
     </div>
 </nav>
-<div class="container" style="margin-top: 50px">
-    <h2 style="margin-left: 50px; margin-bottom: 30px;">Products</h2>
+
+<div style="margin-top: 100px" class="container">
     <div class="row">
-    @foreach($products as $product)
-            <div class="col" style="margin-bottom: 20px">
-                <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
-                    <img style="width: 200px; height: 200px" class="card-img-top" src="{{$product['image']}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$product['title']}}</h5>
-                        <p class="card-text">{{$product['description']}}</p>
-                        <span>By: <a href="#">{{$product->user->name.' '.$product->user->lastname}}</a></span>
-                        <span>{{$product['created_at']}}</span><br><br>
-                        <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
-                    </div>
-                </div>
-            </div>
-    @endforeach
+        <div class="col-8">
+            <img style="width: 70%" src="../{{$product->image}}" alt="">
+        </div>
+        <div style="padding-top: 100px" class="col-4">
+            <h2>{{$product->title}}</h2><br>
+            <p>{{$product->description}}</p>
+            <form action="/order">
+                <label>Price: {{$product->price}}$</label>
+                <input class="btn btn-primary" type="submit" value="Place order">
+            </form>
+        </div>
     </div>
 </div>
 </body>

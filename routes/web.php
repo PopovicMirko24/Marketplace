@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 //Routes for views
 Route::get('/', function () {
-    $products = Product::orderBy('created_at', 'desc')->get();
+    $products = Product::where('isSold', false)->orderBy('created_at', 'desc')->get();
     return view('home', ['products' => $products]);
 });
 
@@ -35,6 +35,9 @@ Route::get('/signIn', function () {
     return view('login');
 });
 
+Route::get('/product/{product}', [ProductController::class, 'loadProductPage']);
+
+Route::get('u=/user/{user}', [UserController::class, 'loadUserPage']);
 
 //Routes for user
 Route::post('/login', [UserController::class, 'login']);

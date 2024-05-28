@@ -51,4 +51,11 @@ class UserController extends Controller
         }
         return redirect('/');
     }
+
+    public function loadUserPage(User $user){
+        if(auth()->user()->id === $user->id)
+            return redirect('/profile');
+
+        return view('user', ['user' => $user]);
+    }
 }

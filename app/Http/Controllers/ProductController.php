@@ -81,4 +81,8 @@ class ProductController extends Controller
         $product->delete();
         return redirect('/profile');
     }
+
+    public function loadProductPage(Product $product){
+        return view('product', ['product' => $product]);
+    }
 }
