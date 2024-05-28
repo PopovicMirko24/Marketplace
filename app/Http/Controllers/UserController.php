@@ -19,7 +19,7 @@ class UserController extends Controller
             return redirect('login');
         }
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     public function register(Request $request){

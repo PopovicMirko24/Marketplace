@@ -24,8 +24,11 @@ Route::get('/', function () {
 });
 
 Route::get('/profile', function () {
-    $products = Product::where('user_id', Auth::id())->orderby('created_at', 'desc')->get();
-    return view('user', ['products' => $products]);
+    if(auth()->user()){
+        $products = auth()->user()->showUsersProducts()->latest()->get();
+        return view('user', ['products' => $products]);
+    }
+    return view('user');
 });
 
 Route::get('/signIn', function () {
@@ -39,4 +42,6 @@ Route::get('/logout',  [UserController::class, 'logout']);
 
 //Routes for product
 Route::post('/create-product',  [ProductController::class, 'createProduct']);
+Route::get('/edit-product/{product}',  [ProductController::class, 'showEditScreen']);
+Route::post('/update-product/{product}',  [ProductController::class, 'updateProduct']);
 
