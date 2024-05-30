@@ -46,8 +46,10 @@
 </nav>
 
 @auth
+
     <div class="row" style="width: 800px; margin-left: auto; margin-right: auto; margin-top: 100px;">
         <div class="col-sm" style="padding:20px; width: 350px; margin-left: auto; margin-right: auto; border-right: 1px solid rgba(128,128,128,0.51);">
+            <h2 style="text-align: center; margin-bottom: 20px">User's data</h2>
             <ul class="list-group">
                 <li class="list-group-item">Name: {{$user->name}}</li>
                 <li class="list-group-item">Lastname: {{$user->lastname}}</li>
@@ -88,22 +90,44 @@
             </div>
         @endif
     </div>
-    <div class="container" style="margin-top: 50px">
+    <div class="container" style="margin-top: 50px;">
         @if(auth()->user()->id === $user->id)
             <h2 style="margin-left: 50px; margin-bottom: 30px;">Your Products</h2>
         @else
             <h2 style="margin-left: 50px; margin-bottom: 30px;">{{$user->name}}'s Products</h2>
         @endif
-        <div class="row">
+            <h3 style="margin-left: 200px;">For sale</h3>
+        <div class="row" style="margin-top: 20px; margin-bottom: 100px">
             @foreach($products as $product)
                 <div class="col" style="margin-bottom: 20px">
-                    <div class="card" style="width: 300px; margin-left: auto; margin-right: auto;">
-                        <img style="width: 300px; height: 300px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
+                    <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
+                        <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{$product['title']}}</h5>
                             <p class="card-text">{{$product['description']}}</p>
                             <span>{{$product['created_at']}}</span><br><br>
-                            @if(auth()->user()->id === $user->id)
+                            @if(auth()->user()->id === $user->id && !$product->isSold)
+                                <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
+                                <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
+                            @else
+                                <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+            <h3 style="margin-left: 200px;">Sold</h3>
+        <div class="row" style="margin-top: 20px">
+            @foreach($products as $product)
+                <div class="col" style="margin-bottom: 20px">
+                    <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
+                        <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{$product['title']}}</h5>
+                            <p class="card-text">{{$product['description']}}</p>
+                            <span>{{$product['created_at']}}</span><br><br>
+                            @if(auth()->user()->id === $user->id && $product->isSold)
                                 <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
                                 <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
                             @else
