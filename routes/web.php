@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -33,6 +34,8 @@ Route::get('/product/{product}', [ProductController::class, 'loadProductPage']);
 
 Route::get('/user/{user}', [UserController::class, 'loadUserPage']);
 
+Route::get('/order/{product}',  [OrderController::class, 'loadOrderPage']);
+
 //Routes for user
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register',  [UserController::class, 'register']);
@@ -44,3 +47,6 @@ Route::post('/create-product',  [ProductController::class, 'createProduct']);
 Route::get('/edit-product/{product}',  [ProductController::class, 'showEditScreen']);
 Route::post('/update-product/{product}',  [ProductController::class, 'updateProduct']);
 Route::get('/delete-product/{product}',  [ProductController::class, 'deleteProduct']);
+
+//Routes of orders
+Route::post('/place-order/{product}',  [OrderController::class, 'makeOrder']);

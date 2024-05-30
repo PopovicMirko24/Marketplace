@@ -69,4 +69,6 @@ class UserController extends Controller
         $products = $user->showUsersProducts()->latest()->get();
         return view('user', ['user' => $user, 'products' => $products]);
     }
+
+
 }
