@@ -31,6 +31,13 @@
                 @endif
             </li>
             <li class="nav-item">
+                @if(auth()->check())
+                    <a class="nav-link" href="/orders">Orders</a>
+                @else
+                    <a class="nav-link disabled" href="#">Orders</a>
+                @endif
+            </li>
+            <li class="nav-item">
                 @auth
                     <a class="nav-link" href="/logout">Logout</a>
                 @else
@@ -96,48 +103,54 @@
         @else
             <h2 style="margin-left: 50px; margin-bottom: 30px;">{{$user->name}}'s Products</h2>
         @endif
-            <h3 style="margin-left: 200px;">For sale</h3>
-        <div class="row" style="margin-top: 20px; margin-bottom: 100px">
-            @foreach($products as $product)
-                <div class="col" style="margin-bottom: 20px">
-                    <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
-                        <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$product['title']}}</h5>
-                            <p class="card-text">{{$product['description']}}</p>
-                            <span>{{$product['created_at']}}</span><br><br>
-                            @if(auth()->user()->id === $user->id && !$product->isSold)
-                                <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
-                                <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
-                            @else
-                                <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
-                            @endif
+            @if($products->count()>0)
+                <h3 style="margin-left: 200px;">For sale</h3>
+                <div class="row" style="margin-top: 20px; margin-bottom: 100px">
+                    @foreach($products as $product)
+                        <div class="col" style="margin-bottom: 20px">
+                            <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
+                                <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$product['title']}}</h5>
+                                    <p class="card-text">{{$product['description']}}</p>
+                                    <span>{{$product['created_at']}}</span><br><br>
+                                    @if(auth()->user()->id === $user->id && !$product->isSold)
+                                        <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
+                                        <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
+                                    @else
+                                        <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
-            <h3 style="margin-left: 200px;">Sold</h3>
-        <div class="row" style="margin-top: 20px">
-            @foreach($products as $product)
-                <div class="col" style="margin-bottom: 20px">
-                    <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
-                        <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$product['title']}}</h5>
-                            <p class="card-text">{{$product['description']}}</p>
-                            <span>{{$product['created_at']}}</span><br><br>
-                            @if(auth()->user()->id === $user->id && $product->isSold)
-                                <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
-                                <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
-                            @else
-                                <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
-                            @endif
+                <h3 style="margin-left: 200px;">Sold</h3>
+                <div class="row" style="margin-top: 20px">
+                    @foreach($products as $product)
+                        <div class="col" style="margin-bottom: 20px">
+                            <div class="card" style="width: 200px; margin-left: auto; margin-right: auto;">
+                                <img style="width: 200px; height: 200px" class="card-img-top" src="../{{$product['image']}}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$product['title']}}</h5>
+                                    <p class="card-text">{{$product['description']}}</p>
+                                    <span>{{$product['created_at']}}</span><br><br>
+                                    @if(auth()->user()->id === $user->id && $product->isSold)
+                                        <a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>
+                                        <a href="/delete-product/{{$product->id}}" class="btn btn-danger">Delete</a>
+                                    @else
+                                        <a href="/product/{{$product->id}}" class="btn btn-primary">See more</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            @else
+                <div class="container">
+                    <h3 style="text-align: center; color: rgba(51,50,50,0.58)">No products</h3>
+                </div>
+            @endif
     </div>
 @else
     <h1 style="text-align: center; margin-top: 40vh; color: rgba(67,65,65,0.52);">Login first</h1>

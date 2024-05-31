@@ -31,6 +31,13 @@
                 @endif
             </li>
             <li class="nav-item">
+                @if(auth()->check())
+                    <a class="nav-link" href="/orders">Orders</a>
+                @else
+                    <a class="nav-link disabled" href="#">Orders</a>
+                @endif
+            </li>
+            <li class="nav-item">
                 @auth
                     <a class="nav-link" href="/logout">Logout</a>
                 @else

@@ -23,18 +23,19 @@ Route::get('/', function () {
     $products = Product::where('isSold', false)->orderBy('created_at', 'desc')->get();
     return view('home', ['products' => $products]);
 });
-
 Route::get('/profile/{user}', [UserController::class, 'showUserProfile']);
-
 Route::get('/signIn', function () {
     return view('login');
 });
-
 Route::get('/product/{product}', [ProductController::class, 'loadProductPage']);
-
 Route::get('/user/{user}', [UserController::class, 'loadUserPage']);
-
 Route::get('/order/{product}',  [OrderController::class, 'loadOrderPage']);
+Route::get('/orders', function (){
+    if(auth()->check())
+        return view('orders');
+    else
+        return view('home');
+});
 
 //Routes for user
 Route::post('/login', [UserController::class, 'login']);
