@@ -29,6 +29,10 @@ class User extends Authenticatable
         return $this->hasMany(Product::class, 'user_id');
     }
 
+    public static function returnUser($id){
+        return self::find($id);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

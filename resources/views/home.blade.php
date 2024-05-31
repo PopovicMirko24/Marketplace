@@ -27,7 +27,14 @@
                 @if(auth()->check())
                     <a class="nav-link" href="/profile/{{auth()->user()->id}}">Profile</a>
                 @else
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link disabled" href="#">Profile</a>
+                @endif
+            </li>
+            <li class="nav-item">
+                @if(auth()->check())
+                    <a class="nav-link" href="/orders">Orders</a>
+                @else
+                    <a class="nav-link disabled" href="#">Orders</a>
                 @endif
             </li>
             <li class="nav-item">
